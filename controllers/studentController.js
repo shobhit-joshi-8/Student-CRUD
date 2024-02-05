@@ -95,8 +95,76 @@ const createStudentConroller = async (req, res) => {
   }
 };
 
+// UPDATE STUDENT
+const updateStudentController = async (req, res) => {
+  try {
+    const studentId = req.params.id;
+    if (!studentId) {
+      return res.status(404).send({
+        success: false,
+        message: "Invalid Id Or Provide Id",
+      });
+    }
+    const { name, roll_no, fees, medium } = req.body;
+    if (!name || !roll_no || !fees || !medium) {
+      return res.status(500).send({
+        success: false,
+        message: "Please Provide All Details",
+      });
+    }
+    const data = await mySqlPool.query(
+      `UPDATE students SET name = ?, roll_no = ?, fees = ?, medium = ? Where id = ?`,
+      [name, roll_no, fees, medium, studentId]
+    );
+    if (!data) {
+      return res.status(500).send({
+        success: false,
+        message: "Error In Update Data",
+      });
+    }
+    res.status(200).send({
+      success: true,
+      message: "Student Details Updated",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error In Update Student API",
+      error,
+    });
+  }
+};
+
+// DELETE STUDENT
+const deleteStudentController = async (req, res) => {
+  try {
+    const studentId = req.params.id;
+    if (!studentId) {
+      return res.status(404).send({
+        success: false,
+        message: "Please Provide Student Id Or Valid Student Id",
+      });
+    }
+    await mySqlPool.query(`DELETE FROM students WHERE id = ?`, [studentId]);
+    res.status(200).send({
+      success: true,
+      message: "Student Deleted Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error In Delete Student API",
+      error,
+    });
+  }
+};
+
 module.exports = {
   getAllStudentsController,
   getStudentByIdController,
   createStudentConroller,
+  updateStudentController,
+  deleteStudentController,
 };
