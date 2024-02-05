@@ -1,0 +1,14 @@
+{
+  "name": "student-crud-mysql",
+  "version": "1.0.0",
+  "description": "mysql nodejs student crud app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "shobhit joshi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
