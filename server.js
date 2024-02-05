@@ -16,6 +16,8 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // routes
+app.use("/api/v1/student", require("./routes/studentRoutes"));
+
 app.get("/test", (req, res) => {
   res.status(200).send("<h1>WELCOME to Nodejs Mysql APP</h1>");
 });
